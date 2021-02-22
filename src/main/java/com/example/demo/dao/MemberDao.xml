@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.dao.MemberDao">
+
+	<insert id="doJoin">
+		INSERT INTO `member`		
+		<set>		
+			regDate = NOW(),
+			updateDate = NOW(),	
+			loginId = #{param.loginId},
+			loginPw = #{param.loginPwReal},
+			`name` = #{param.name},
+			gender = #{param.gender},
+			address = #{param.address},
+			email = #{param.email},
+			cellPhoneNo = #{param.cellPhoneNo},
+			corp = #{param.corp},
+			authLevel = 2
+		</set>
+	</insert>
+	
+	<select id="getMember" resultType="Member">
+		SELECT * FROM `member`
+		WHERE id = #{loginedMemberId}
+	</select>
+	
+	<select id="isAdmin" resultType="Member">
+		SELECT * FROM `member`
+		WHERE id = #{loginedMemberId}
+	</select>
+	
+	<select id="getMemberByLoginId" resultType="Member">
+		SELECT * FROM `member`
+		WHERE loginId = #{param.loginId}		
+	</select>
+	
+</mapper>

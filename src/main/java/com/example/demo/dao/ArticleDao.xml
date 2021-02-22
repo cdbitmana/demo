@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.example.demo.dao.ArticleDao">
+
+	<select id="getArticlesForPrint" resultType="Article">
+		SELECT * FROM article
+	</select>
+
+	<insert id="doWrite">
+		INSERT INTO article
+		<set>
+		regDate = NOW(),
+		updateDate = NOW(),
+		memberId = #{param.memberId},
+		boardId = #{param.boardId},
+		title = #{param.title},
+		`body` = #{param.body}
+		</set>
+	</insert>
+	
+	<update id="doModify">
+		UPDATE article
+		<set>
+			<if test="param.title != null or param.body != null">
+				updateDate = NOW(),	
+			</if>
+			<if test="param.title != null">
+				title = #{param.title},
+			</if>
+			<if test="param.body != null">
+				`body` = #{param.body},
+			</if>
+		</set>
+		WHERE id = #{param.id}
+	</update>
+	
+	<delete id="doDelete">
+	DELETE FROM article
+	WHERE id = #{param.id}
+	</delete>
+</mapper>
